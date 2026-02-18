@@ -106,7 +106,19 @@ FactoryBot.define do
         }
         default_config['source'] = 'embedded_signup' unless channel_whatsapp.provider_config.key?('source')
         channel_whatsapp.provider_config = channel_whatsapp.provider_config.merge(default_config)
+      elsif channel_whatsapp.provider == 'gupshup'
+        # Configuração padrão para Gupshup
+        default_config = {
+          'api_key' => 'test_gupshup_key',
+          'app_name' => 'test_app'
+        }
+        channel_whatsapp.provider_config = channel_whatsapp.provider_config.merge(default_config)
       end
+    end
+
+    trait :gupshup do
+      provider { 'gupshup' }
+      provider_config { { 'api_key' => 'test_gupshup_key', 'app_name' => 'test_app' } }
     end
 
     after(:create) do |channel_whatsapp|

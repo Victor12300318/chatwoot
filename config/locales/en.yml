@@ -101,6 +101,11 @@ en:
       reauthorization:
         generic: 'Failed to reauthorize WhatsApp. Please try again.'
         not_supported: 'Reauthorization is not supported for this type of WhatsApp channel.'
+      gupshup:
+        auth_failed: 'Failed to authenticate with Gupshup. Please check your API key and App Name.'
+        invalid_config: 'Invalid Gupshup configuration. Please verify your API key and App Name.'
+        template_sync_failed: 'Failed to sync templates from Gupshup. Please try again.'
+        message_send_failed: 'Failed to send message via Gupshup. Please try again.'
     inboxes:
       imap:
         socket_error: Please check the network connection, IMAP address and try again.

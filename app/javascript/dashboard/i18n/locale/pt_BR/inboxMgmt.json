@@ -236,7 +236,9 @@
           "WHATSAPP_CLOUD": "Cloud do WhatsApp",
           "WHATSAPP_CLOUD_DESC": "Configuração rápida via Meta",
           "TWILIO_DESC": "Conectar através de credenciais Twilio",
-          "360_DIALOG": "360Dialog"
+          "360_DIALOG": "360Dialog",
+          "GUPSHUP": "Gupshup",
+          "GUPSHUP_DESC": "Conectar via BSP Gupshup"
         },
         "SELECT_PROVIDER": {
           "TITLE": "Selecione seu provedor de API",
@@ -307,6 +309,20 @@
           "SUCCESS_FALLBACK": "A conta do WhatsApp Business foi configurada com sucesso",
           "MANUAL_FALLBACK": "Se o seu número já estiver conectado à Plataforma WhatsApp Business (API) ou se você for um provedor de tecnologia integrando o seu próprio número, use o fluxo de {link}",
           "MANUAL_LINK_TEXT": "fluxo de configuração manual"
+        },
+        "GUPSHUP": {
+          "APP_NAME": {
+            "LABEL": "Nome do Aplicativo",
+            "PLACEHOLDER": "Digite o nome do seu aplicativo no Gupshup",
+            "ERROR": "O nome do aplicativo é obrigatório",
+            "HELP": "Nome do aplicativo configurado no painel do Gupshup"
+          },
+          "API_KEY": {
+            "HELP": "Chave de API obtida no painel do Gupshup"
+          },
+          "CALLBACK_TITLE": "URL de Callback",
+          "CALLBACK_SUBTITLE": "Configure esta URL no painel do Gupshup para receber webhooks de mensagens.",
+          "CALLBACK_URL_PLACEHOLDER": "https://seu-dominio.com/webhooks/whatsapp/seu-numero"
         },
         "API": {
           "ERROR_MESSAGE": "Não foi possível salvar o canal do WhatsApp"

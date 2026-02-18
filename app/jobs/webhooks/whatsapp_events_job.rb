@@ -62,6 +62,8 @@ class Webhooks::WhatsappEventsJob < ApplicationJob
     case channel.provider
     when 'whatsapp_cloud'
       Whatsapp::IncomingMessageWhatsappCloudService.new(inbox: channel.inbox, params: params).perform
+    when 'gupshup'
+      Whatsapp::IncomingMessageGupshupService.new(inbox: channel.inbox, params: params).perform
     else
       Whatsapp::IncomingMessageService.new(inbox: channel.inbox, params: params).perform
     end
@@ -89,7 +91,36 @@ class Webhooks::WhatsappEventsJob < ApplicationJob
     # we will give priority to the phone_number in the payload
     return get_channel_from_wb_payload(params) if params[:object] == 'whatsapp_business_account'
 
+    # Tenta encontrar pelo formato do Gupshup
+    return find_channel_from_gupshup_payload(params) if params[:app].present? || params[:payload].present?
+
     find_channel_by_url_param(params)
+  end
+
+  def find_channel_from_gupshup_payload(params)
+    # Gupshup pode enviar o número no payload ou nos parâmetros da URL
+    phone_number = params[:phone_number]
+
+    # Se não tem phone_number na URL, tenta extrair do payload
+    if phone_number.blank?
+      payload = params[:payload] || params
+      # Para mensagens recebidas, o destino é o número do negócio
+      phone_number = payload[:destination]
+      # Para mensagens de status, pode estar em outro campo
+      phone_number ||= extract_source_from_gupshup_status(payload)
+    end
+
+    return nil if phone_number.blank?
+
+    # Formata o número se necessário
+    phone_number = "+#{phone_number}" unless phone_number.start_with?('+')
+
+    Channel::Whatsapp.find_by(phone_number: phone_number)
+  end
+
+  def extract_source_from_gupshup_status(payload)
+    # Em eventos de status do Gupshup, o número de destino está em 'destination'
+    payload[:destination] || payload.dig(:message, :destination)
   end
 
   def get_channel_from_wb_payload(wb_params)
